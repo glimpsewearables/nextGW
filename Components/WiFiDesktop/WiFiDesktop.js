@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -34,78 +35,187 @@ const useStyles = makeStyles((theme) => ({
   },
   Label: {
     fontFamily: "Segoe UI Semibold",
-    marginLeft: "3rem",
+    marginLeft: "2rem",
     [theme.breakpoints.down("sm")]: {
       marginLeft: "0",
     },
   },
 }));
-let data = [
+
+const INIT_STATE = [
   { name: "SSID1" },
   { name: "SSID2" },
   { name: "SSID3" },
   { name: "SSID4" },
   { name: "SSID5" },
 ];
+
 export default function WiFiDesktop() {
-  const [button, setButton] = useState("scan");
-  const [Data, setData] = useState([]);
+  const [data, setData] = useState([]);
+  // const [isClicked, setIsClicked] = useState(false); --> is this needed?
 
   const classes = useStyles();
-  const changeScantoConnect = () => {
-    setButton("Connect");
-    setData(data);
+
+  const handleChange = (event) => {
+    const { id } = event.target;
+    const ssid_name = id.split('-')[0];
+
+    //set password with corresponding ssid in state
+    const new_data = data.map((ssid) => {
+      return ssid.name === ssid_name
+        ? { name: ssid_name, password: event.target.value }
+        : { name: ssid.name };
+    })
+
+    //clear any other passwords that have been inputted by user
+    data.forEach(ssid => {
+      if (ssid.name != ssid_name)
+        document.getElementById(`${ssid.name}-pwd`).value = '';
+    })
+
+    setData(new_data);
+  }
+
+  const scanWifi = async () => {
+    try {
+      const url = `${process.env.baseURL}/api/scan_wifi`;
+      const response = await axios.get(url);
+      const { ssid_list } = response.data;
+      setData(ssid_list);
+      document.getElementById('scan-button-container').style.display = 'none';
+      document.getElementById('connect-button-container').style.display = 'block';
+      document.getElementById('back-button-container').style.display = 'block';
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
-  const [isClicked, setIsClicked] = useState(false);
-  const Clicked = (name) => {
-    const changeData = Data.map((wifi) => {
-      if (wifi.name === name) {
-        return { placeholder: "Enter Password", name };
-      } else {
-        return { name: wifi.name };
+  const backToScan = () => {
+    setData([]);
+    document.getElementById('scan-button-container').style.display = 'block';
+    document.getElementById('connect-button-container').style.display = 'none';
+    document.getElementById('back-button-container').style.display = 'none';
+  }
+
+  const connectWifi = async () => {
+    try {
+      const ssid = [];
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].password) {
+          ssid.push(data[i].name);
+          ssid.push(data[i].password);
+        }
       }
-    });
-    setData(changeData);
-  };
-  const UnClicked = (name) => {
-    const changeData = Data.map((wifi) => {
-      if (wifi.name === name) {
-        return { placeholder: "", name };
-      } else {
-        return { name: wifi.name };
+
+      if(ssid.length == 0) {
+        alert('You did not enter a password for any SSID.');
+        return;
       }
-    });
-    setData(changeData);
-  };
+
+      const url = `${process.env.baseURL}/api/connect_wifi`;
+      const payload = { name: ssid[0], password: ssid[1] };
+      const response = await axios.post(url, payload);
+      alert(response.data.message);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  // const Clicked = (name, password) => {
+  //   const newData = data.map((wifi) => {
+  //     return wifi.name === name
+  //       ? { placeholder: "Enter Password", name, password }
+  //       : { name: wifi.name };
+  //   })
+  //   setData(newData);
+  // }
+
+  // const UnClicked = (name, password) => {
+  //   const newData = data.map((wifi) => {
+  //     return wifi.name === name
+  //       ? { placeholder: "", name }
+  //       : { name: wifi.name };
+  //   });
+  //   setData(newData);
+  // };
+
   return (
     <div className={classes.box}>
-      {Data.map((data) => (
-        <div style={{ borderBottom: "1px solid" }}>
-          <span className={classes.Label}>
-            {data.name}
-            <Input
-              className={classes.INPUT}
-              disableUnderline={true}
-              placeholder={data.placeholder}
-              onFocus={() => Clicked(data.name)}
-              onBlur={() => UnClicked(data.name)}
-            />
-          </span>
-        </div>
-      ))}
-      <Button
-        onClick={changeScantoConnect}
-        style={{
-          width: "14rem",
-          width: "14rem",
-          color: "#7e7e7e",
-          fontFamily: "Segoe UI Semibold",
-        }}
-        variant="contained"
-      >
-        {button}
-      </Button>
+      {
+        data.map((ssid, key) => (
+          <div
+            style={{
+              borderBottom: '1px solid',
+              width: '80%',
+              display: 'flex',
+              justifyContent: 'space-between',
+              position: 'relative'
+            }}
+            key={key}
+          >
+            <div id={`${ssid.name}-label`} className={classes.Label}>
+              {ssid.name}
+            </div>
+            <div style={{ position: 'absolute', top: '-4px', left: '35%' }}>
+              <Input
+                id={`${ssid.name}-pwd`}
+                className={classes.INPUT}
+                disableUnderline={true}
+                placeholder="Enter Password"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        ))
+      }
+
+      <div id="scan-button-container">
+        <Button
+          onClick={scanWifi}
+          style={{
+            width: "14rem",
+            width: "14rem",
+            color: "#7e7e7e",
+            fontFamily: "Segoe UI Semibold",
+          }}
+          variant="contained"
+        >
+          SCAN
+        </Button>
+      </div>
+
+      <div id="connect-button-container" style={{ display: 'none' }}>
+        <Button
+          onClick={connectWifi}
+          style={{
+            width: "14rem",
+            width: "14rem",
+            color: "#7e7e7e",
+            fontFamily: "Segoe UI Semibold",
+          }}
+          variant="contained"
+        >
+          CONNECT
+        </Button>
+      </div>
+
+      <div id="back-button-container" style={{ display: 'none' }}>
+        <Button
+          onClick={backToScan}
+          style={{
+            width: "14rem",
+            width: "14rem",
+            color: "#7e7e7e",
+            fontFamily: "Segoe UI Semibold",
+          }}
+          variant="contained"
+        >
+          BACK
+        </Button>
+      </div>
+
     </div>
   );
 }
