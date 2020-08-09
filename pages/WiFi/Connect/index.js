@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -6,6 +7,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Input from "@material-ui/core/Input";
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +36,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Connect = (props) => {
+  const router = useRouter();
+  const { ssid } = router.query;
   const classes = useStyles();
-  const [Data, setData] = useState([]);
-  const ScanData = () => {
-    setData(data);
-  };
+
+  const connectWifi = async () => {
+    try {
+      const password = document.getElementById('password').value;
+      const url = `${process.env.baseURL}/api/connect_wifi`;
+      const payload = { name: ssid, password: password };
+      const response = await axios.post(url, payload);
+      alert(response.data.message);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Container>
       <h1
@@ -51,11 +65,12 @@ const Connect = (props) => {
         WiFi
       </h1>
       <List component="nav" className={classes.root}>
-        <Button onClick={ScanData} className={classes.button}>
-          SSID1
+        <Button className={classes.button}>
+          {ssid}
         </Button>
         <ListItem>
           <Input
+            id="password"
             className={classes.INPUT}
             disableUnderline={true}
             placeholder="Enter Password"
@@ -68,6 +83,7 @@ const Connect = (props) => {
               color: "#7e7e7e",
               fontFamily: "Segoe UI Semibold",
             }}
+            onClick={connectWifi}
             variant="contained"
           >
             Connect
