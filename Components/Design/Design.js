@@ -84,12 +84,13 @@ export default function FullWidthGrid() {
             </h1>
             <WiFiDesktop />
           </div>
+          
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
-          <Grid xs={12}>
+          <Grid item xs={12}>
             <h1 className={classes.typo}>Home</h1>
           </Grid>
-          <Grid className={classes.offline} xs={12}>
+          <Grid className={classes.offline} item xs={12}>
             <Paper className={classes.paper}>Offline</Paper>
           </Grid>
         </Grid>
