@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Input from "@material-ui/core/Input";
 import { useRouter } from 'next/router'
+import getBaseURL from '../../../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,11 +40,12 @@ const Connect = (props) => {
   const router = useRouter();
   const { ssid } = router.query;
   const classes = useStyles();
+  const baseURL = getBaseURL(window);
 
   const connectWifi = async () => {
     try {
       const password = document.getElementById('password').value;
-      const url = `${process.env.baseURL}/api/connect_wifi`;
+      const url = `${baseURL}/api/connect_wifi`;
       const payload = { name: ssid, password: password };
       const response = await axios.post(url, payload);
       alert(response.data.message);

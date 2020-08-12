@@ -3,6 +3,7 @@ import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import getBaseURL from '../../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,6 +53,7 @@ const INIT_STATE = [
 
 export default function WiFiDesktop() {
   const [data, setData] = useState([]);
+  const baseURL = getBaseURL(window);
   // const [isClicked, setIsClicked] = useState(false); --> is this needed?
 
   const classes = useStyles();
@@ -78,7 +80,7 @@ export default function WiFiDesktop() {
 
   const scanWifi = async () => {
     try {
-      const url = `${process.env.baseURL}/api/scan_wifi`;
+      const url = `${baseURL}/api/scan_wifi`;
       const response = await axios.get(url);
       const { ssid_list } = response.data;
       setData(ssid_list);
@@ -113,7 +115,7 @@ export default function WiFiDesktop() {
         return;
       }
 
-      const url = `${process.env.baseURL}/api/connect_wifi`;
+      const url = `${baseURL}/api/connect_wifi`;
       const payload = { name: ssid[0], password: ssid[1] };
       const response = await axios.post(url, payload);
       alert(response.data.message);

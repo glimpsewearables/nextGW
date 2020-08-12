@@ -7,6 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Router from 'next/router';
+import getBaseURL from '../../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,11 +41,12 @@ let data = [
 export default function WiFiScanMobile() {
   const classes = useStyles();
   const [data, setData] = useState([]);
+  const baseURL = getBaseURL(window);
 
   const scanWifi = async () => {
     try {
       //store this url in an env file
-      const url = `${process.env.baseURL}/api/scan_wifi`;
+      const url = `${baseURL}/api/scan_wifi`;
       const response = await axios.get(url);
       const { ssid_list } = response.data;
       setData(ssid_list);
