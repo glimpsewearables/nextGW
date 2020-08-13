@@ -40,7 +40,11 @@ const Connect = (props) => {
   const router = useRouter();
   const { ssid } = router.query;
   const classes = useStyles();
-  const baseURL = getBaseURL(window);
+  let baseURL;
+  React.useEffect(() => {
+    baseURL = getBaseURL(window);
+    console.log(baseURL);
+  }, []);
 
   const connectWifi = async () => {
     try {

@@ -41,7 +41,12 @@ let data = [
 export default function WiFiScanMobile() {
   const classes = useStyles();
   const [data, setData] = useState([]);
-  const baseURL = getBaseURL(window);
+  
+  let baseURL;
+  React.useEffect(() => {
+    baseURL = getBaseURL(window);
+    console.log(baseURL);
+  }, []);
 
   const scanWifi = async () => {
     try {

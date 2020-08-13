@@ -53,7 +53,12 @@ const INIT_STATE = [
 
 export default function WiFiDesktop() {
   const [data, setData] = useState([]);
-  const baseURL = getBaseURL(window);
+  let baseURL;
+
+  React.useEffect(() => {
+    baseURL = getBaseURL(window);
+    console.log(baseURL);
+  }, []);
   // const [isClicked, setIsClicked] = useState(false); --> is this needed?
 
   const classes = useStyles();
