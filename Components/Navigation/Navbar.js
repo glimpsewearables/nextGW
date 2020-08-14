@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Router from "next/router";
+import getBaseURL from '../../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,45 +18,25 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    height: "5rem",
-    width: "4rem",
-    backgroundColor: "#d6d6d6",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#dae3f0",
+    flexDirection: 'column',
     borderRadius: "20px",
-    boxShadow: "4px 2px 11px grey",
+    // boxShadow: "4px 2px 11px grey",
     cursor: "pointer",
+    fontFamily: "Segoe UI ",
+    fontSize: "16px",
+    color: "#7e7e7e",
     [theme.breakpoints.down("xs")]: {
       padding: theme.spacing(4),
-    },
-  },
-  WiFiDesk: {
-    padding: theme.spacing(2),
-    height: "5rem",
-    width: "4rem",
-    backgroundColor: "#d6d6d6",
-    borderRadius: "20px",
-    boxShadow: "4px 2px 11px grey",
-    cursor: "pointer",
-    [theme.breakpoints.down("xs")]: {
-      display: "none",
-    },
-  },
-  WiFiMob: {
-    padding: theme.spacing(2),
-    height: "5rem",
-    width: "4rem",
-    display: "none",
-    backgroundColor: "#d6d6d6",
-    borderRadius: "20px",
-    boxShadow: "4px 2px 11px grey",
-    cursor: "pointer",
-    [theme.breakpoints.down("xs")]: {
-      padding: theme.spacing(4),
-      display: "block",
     },
   },
   Img: {
     height: "5rem",
-    width: "4rem",
+    width: "4.5rem",
+    marginBottom: "10px"
   },
   Centerbox: {
     display: "flex",
@@ -67,44 +48,55 @@ const useStyles = makeStyles((theme) => ({
 export default function Navbar() {
   const classes = useStyles();
 
+  let baseURL;
+  React.useEffect(() => {
+    baseURL = getBaseURL(window);
+  }, [])
+
   return (
     <div className={classes.root}>
       <Grid className={classes.grid} container spacing={3}>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
-          <Paper className={classes.WiFiDesk}>
+          <Paper className={classes.paper} onClick={() => Router.push("/wifi")}>
             <img
               className={classes.Img}
               src="/wifi_vectorized.png"
               alt="WiFi Logo"
             />
-          </Paper>
-          <Paper
-            onClick={() => Router.push("/WiFi")}
-            className={classes.WiFiMob}
-          >
-            <img
-              className={classes.Img}
-              src="/wifi_vectorized.png"
-              alt="WiFi Logo"
-            />
+            WIFI
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
           <Paper className={classes.paper}>
-            <a href="http://192.168.50.5:3030/home/pi/pikrellcam/media/videos">
+            <a href="http://a57f3ce3144e.ngrok.io/pikrellcam/media/videos/raspberrypi_video_2019-05-13_18.35.54.mp4">
               <img
                 className={classes.Img}
                 src="/video.png"
                 alt="Video Logo"
               />
             </a>
+            VIDEOS
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
-          <Paper className={classes.paper}></Paper>
+          <Paper className={classes.paper} onClick={() => Router.push("/wifi")}>
+            <img
+              className={classes.Img}
+              src="/wifi_vectorized.png"
+              alt="WiFi Logo"
+            />
+            WIFI
+          </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
-          <Paper className={classes.paper}></Paper>
+          <Paper className={classes.paper} onClick={() => Router.push("/wifi")}>
+            <img
+              className={classes.Img}
+              src="/wifi_vectorized.png"
+              alt="WiFi Logo"
+            />
+            WIFI
+          </Paper>
         </Grid>
       </Grid>
     </div>
