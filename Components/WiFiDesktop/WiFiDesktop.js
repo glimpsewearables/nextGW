@@ -27,12 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   INPUT: {
     marginLeft: "3rem",
-    // '&::-Input::placeholder':{
-    //   opacity: 0
-    // },
-    // '&::Input:focus::placeholder':{
-    //   opacity: 1
-    // }
   },
   Label: {
     fontFamily: "Segoe UI Semibold",
@@ -42,14 +36,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-const INIT_STATE = [
-  { name: "SSID1" },
-  { name: "SSID2" },
-  { name: "SSID3" },
-  { name: "SSID4" },
-  { name: "SSID5" },
-];
 
 export default function WiFiDesktop() {
   const [data, setData] = useState([]);
@@ -129,24 +115,6 @@ export default function WiFiDesktop() {
       console.log(error);
     }
   }
-
-  // const Clicked = (name, password) => {
-  //   const newData = data.map((wifi) => {
-  //     return wifi.name === name
-  //       ? { placeholder: "Enter Password", name, password }
-  //       : { name: wifi.name };
-  //   })
-  //   setData(newData);
-  // }
-
-  // const UnClicked = (name, password) => {
-  //   const newData = data.map((wifi) => {
-  //     return wifi.name === name
-  //       ? { placeholder: "", name }
-  //       : { name: wifi.name };
-  //   });
-  //   setData(newData);
-  // };
 
   return (
     <div className={classes.box}>

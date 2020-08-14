@@ -31,13 +31,7 @@ const useStyles = makeStyles((theme) => ({
     color: '	#7e7e7e',
   }
 }));
-let data = [
-  { name: 'SSID1' },
-  { name: 'SSID2' },
-  { name: 'SSID3' },
-  { name: 'SSID4' },
-  { name: 'SSID5' },
-];
+
 export default function WiFiScanMobile() {
   const classes = useStyles();
   const [data, setData] = useState([]);
@@ -67,7 +61,7 @@ export default function WiFiScanMobile() {
       <List component="nav" className={classes.root}>
         <Button onClick={scanWifi} className={classes.button}>Scan</Button>
         {data.map((ssid, key) => (
-          <ListItem onClick={() => Router.push({ pathname: '/WiFi/Connect', query: { ssid: ssid.name } })} button divider>
+          <ListItem onClick={() => Router.push({ pathname: '/connect', query: { ssid: ssid.name } })} button divider>
             <ListItemText className={classes.item}><span style={{ fontFamily: 'Segoe UI Semibold' }}>{ssid.name}</span></ListItemText>
           </ListItem>
         ))}
