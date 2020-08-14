@@ -1,14 +1,13 @@
 import axios from 'axios';
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Input from "@material-ui/core/Input";
 import { useRouter } from 'next/router'
-import getBaseURL from '../../../utils/baseURL';
+import getBaseURL from '../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,13 +36,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Connect = (props) => {
+  const classes = useStyles();
   const router = useRouter();
   const { ssid } = router.query;
-  const classes = useStyles();
   let baseURL;
   React.useEffect(() => {
     baseURL = getBaseURL(window);
-    console.log(baseURL);
+    if (!ssid) router.push("/wifi");
   }, []);
 
   const connectWifi = async () => {
@@ -60,43 +59,45 @@ const Connect = (props) => {
   }
 
   return (
-    <Container>
-      <h1
-        style={{
-          color: "#7e7e7e",
-          fontWeight: "bold",
-          fontFamily: "Segoe UI ",
-        }}
-      >
-        WiFi
+    ssid
+      ? <Container>
+        <h1
+          style={{
+            color: "#7e7e7e",
+            fontWeight: "bold",
+            fontFamily: "Segoe UI ",
+          }}
+        >
+          WiFi
       </h1>
-      <List component="nav" className={classes.root}>
-        <Button className={classes.button}>
-          {ssid}
-        </Button>
-        <ListItem>
-          <Input
-            id="password"
-            className={classes.INPUT}
-            disableUnderline={true}
-            placeholder="Enter Password"
-          />
-        </ListItem>
-        <ListItem style={{ display: "flex", justifyContent: "center" }}>
-          <Button
-            style={{
-              width: "14rem",
-              color: "#7e7e7e",
-              fontFamily: "Segoe UI Semibold",
-            }}
-            onClick={connectWifi}
-            variant="contained"
-          >
-            Connect
+        <List component="nav" className={classes.root}>
+          <Button className={classes.button}>
+            {ssid}
           </Button>
-        </ListItem>
-      </List>
-    </Container>
+          <ListItem>
+            <Input
+              id="password"
+              className={classes.INPUT}
+              disableUnderline={true}
+              placeholder="Enter Password"
+            />
+          </ListItem>
+          <ListItem style={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              style={{
+                width: "14rem",
+                color: "#7e7e7e",
+                fontFamily: "Segoe UI Semibold",
+              }}
+              onClick={connectWifi}
+              variant="contained"
+            >
+              Connect
+          </Button>
+          </ListItem>
+        </List>
+      </Container>
+      : null
   );
 };
 export default Connect;
