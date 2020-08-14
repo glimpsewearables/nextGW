@@ -104,24 +104,26 @@ export default function Navbar() {
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
-          <Paper className={classes.PaperDesk}>
-            <a href="http://a57f3ce3144e.ngrok.io/pikrellcam/media/videos/raspberrypi_video_2019-05-13_18.35.54.mp4">
-              <img
-                className={classes.Img}
-                src="/video.png"
-                alt="Video Logo"
-              />
-            </a>
+          <Paper
+            className={classes.PaperDesk}
+            onClick={() => Router.push("/videos")}
+          >
+            <img
+              className={classes.Img}
+              src="/video.png"
+              alt="Video Logo"
+            />
             VIDEOS
           </Paper>
-          <Paper className={classes.PaperMob}>
-            <a href="http://a57f3ce3144e.ngrok.io/pikrellcam/media/videos/raspberrypi_video_2019-05-13_18.35.54.mp4">
-              <img
-                className={classes.Img}
-                src="/video.png"
-                alt="Video Logo"
-              />
-            </a>
+          <Paper
+            className={classes.PaperDesk}
+            onClick={() => Router.push("/videos")}
+          >
+            <img
+              className={classes.Img}
+              src="/video.png"
+              alt="Video Logo"
+            />
             VIDEOS
           </Paper>
         </Grid>
