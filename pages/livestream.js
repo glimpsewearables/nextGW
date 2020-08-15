@@ -79,7 +79,7 @@ export default function Livestream({ baseURL }) {
           <Navbar />
         </Grid>
         <Grid className={classes.main} item xs={12} sm={8} md={10}>
-          <img src={`${baseURL}/mjpeg_read.php?${time}`} width="90%" />
+          <img src={`${baseURL}/run/pikrellcam/mjpeg.jpg?${time}`} width="90%" />
         </Grid>
       </Grid>
     </Container>
