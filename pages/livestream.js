@@ -78,15 +78,9 @@ export default function Livestream({ baseURL }) {
         <Grid item xs={12} sm={3} md={2}>
           <Navbar />
         </Grid>
-        {
-          baseURL
-            ? (
-              <Grid className={classes.main} item xs={12} sm={8} md={10}>
-                <img src={`${baseURL}/mjpeg_read.php?${time}`} width="90%" />
-              </Grid>
-            )
-            : null
-        }
+        <Grid className={classes.main} item xs={12} sm={8} md={10}>
+          <img src={`${baseURL}/mjpeg_read.php?${time}`} width="90%" />
+        </Grid>
       </Grid>
     </Container>
   );
