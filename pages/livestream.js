@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   main: {
-    padding: "4rem",
+    padding: "0rem",
     [theme.breakpoints.down("xs")]: {
       padding: "1rem",
       display: "flex",
@@ -92,6 +92,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       display: "none"
     },
+  },
+  heading: {
+    color: '#7e7e7e', 
+    fontWeight: 'bold', 
+    fontFamily: 'Segoe UI', 
+    margin: '0', 
+    width: '100%', 
+    textAlign: 'left',
   }
 }));
 
@@ -106,12 +114,12 @@ export default function Livestream({ baseURL }) {
 
   return (
     <Container>
-      <Grid className={classes.grid} container>
+      <Grid className={classes.grid} container spacing={5}>
         <Grid item xs={12} sm={3} md={2} className={classes.header}>
             <Navbar />
         </Grid>
         <Grid className={classes.main} item xs={12} sm={9} md={10}>
-          <h1 style={{ color: '#7e7e7e', fontWeight: 'bold', fontFamily: 'Segoe UI', margin: '0', width: '100%', textAlign: 'left' }}>Live</h1>
+          <h1 className={classes.heading}>Live</h1>
           <div className={classes.video}>
             <img src={`${baseURL}5/run/pikrellcam/mjpeg.jpg?${time}`} style={{ width: "100%", height: "100%" }} />
           </div>
