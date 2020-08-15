@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FullWidthGrid() {
+export default function FullWidthGrid({ baseURL }) {
   const classes = useStyles();
 
   return (
@@ -85,9 +85,9 @@ export default function FullWidthGrid() {
             >
               WiFi
             </h1>
-            <WiFiDesktop />
+            <WiFiDesktop baseURL={baseURL} />
           </div>
-          
+
         </Grid>
         <Grid item xs={12} sm={3} md={2}>
           <Grid item xs={12}>

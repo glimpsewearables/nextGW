@@ -1,10 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Head from 'next/head';
 import '../styles/styles.css';
+import PropTypes from 'prop-types';
+import getBaseURL from '../utils/baseURL';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
+  const [baseURL, setBaseURL] = React.useState(null);
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -12,6 +14,8 @@ export default function MyApp(props) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+    setBaseURL(getBaseURL(window));
+
   }, []);
 
   return (
@@ -20,7 +24,7 @@ export default function MyApp(props) {
         <title>WiFi App</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <Component {...pageProps} />
+      <Component {...pageProps} baseURL={baseURL} />
     </React.Fragment>
   );
 }

@@ -1,11 +1,8 @@
 import React from 'react';
-import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Navbar from "../Components/Navigation/Navbar";
 import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
-import getBaseURL from '../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -66,13 +63,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Livestream() {
+export default function Livestream({ baseURL }) {
   const classes = useStyles();
   const [time, setTime] = React.useState(Date.now());
-  let baseURL;
+
   React.useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 500);
-    baseURL = getBaseURL(window);
     return () => { clearInterval(interval); }
   }, []);
 
@@ -82,9 +78,15 @@ export default function Livestream() {
         <Grid item xs={12} sm={3} md={2}>
           <Navbar />
         </Grid>
-        <Grid className={classes.main} item xs={12} sm={8} md={10}>
-          <img src={`${baseURL}/mjpeg_read.php?${time}`} width="90%" />
-        </Grid>
+        {
+          baseURL
+            ? (
+              <Grid className={classes.main} item xs={12} sm={8} md={10}>
+                <img src={`${baseURL}/mjpeg_read.php?${time}`} width="90%" />
+              </Grid>
+            )
+            : null
+        }
       </Grid>
     </Container>
   );

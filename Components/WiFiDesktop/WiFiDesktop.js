@@ -37,14 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function WiFiDesktop() {
+export default function WiFiDesktop({ baseURL }) {
   const [data, setData] = useState([]);
-  let baseURL;
-
-  React.useEffect(() => {
-    baseURL = getBaseURL(window);
-    console.log(baseURL);
-  }, []);
   // const [isClicked, setIsClicked] = useState(false); --> is this needed?
 
   const classes = useStyles();
@@ -101,7 +95,7 @@ export default function WiFiDesktop() {
         }
       }
 
-      if(ssid.length == 0) {
+      if (ssid.length == 0) {
         alert('You did not enter a password for any SSID.');
         return;
       }

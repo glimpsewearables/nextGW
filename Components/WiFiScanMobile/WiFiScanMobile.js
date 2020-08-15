@@ -32,15 +32,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function WiFiScanMobile() {
+export default function WiFiScanMobile({ baseURL }) {
   const classes = useStyles();
   const [data, setData] = useState([]);
-  
-  let baseURL;
-  React.useEffect(() => {
-    baseURL = getBaseURL(window);
-    console.log(baseURL);
-  }, []);
 
   const scanWifi = async () => {
     try {

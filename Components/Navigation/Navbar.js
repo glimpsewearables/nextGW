@@ -116,7 +116,7 @@ export default function Navbar() {
             VIDEOS
           </Paper>
           <Paper
-            className={classes.PaperDesk}
+            className={classes.PaperMob}
             onClick={() => Router.push("/videos")}
           >
             <img

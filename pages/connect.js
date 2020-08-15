@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Input from "@material-ui/core/Input";
 import { useRouter } from 'next/router'
-import getBaseURL from '../utils/baseURL';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,15 +34,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Connect = (props) => {
+const Connect = ({ baseURL }) => {
   const classes = useStyles();
   const router = useRouter();
   const { ssid } = router.query;
-  let baseURL;
-  React.useEffect(() => {
-    baseURL = getBaseURL(window);
-    if (!ssid) router.push("/wifi");
-  }, []);
 
   const connectWifi = async () => {
     try {
