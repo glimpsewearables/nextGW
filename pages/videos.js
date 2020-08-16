@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
 import ReactPlayer from 'react-player';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,27 +104,48 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const INIT_STATE = [
-  "Video 1",
-  "Video 2",
-  "Video 3",
-  "Video 4",
-  "Video 5",
-];
-
-function toggleDisplay(id) {
-  const x = document.getElementById(id);
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-const Videos = () => {
+const Videos = ({ baseURL }) => {
   const classes = useStyles();
-  const [url, setUrl] = React.useState('https://www.youtube.com/watch?v=ysz5S6PUM-U');
-  const [data, setData] = React.useState(INIT_STATE);
+  const [url, setUrl] = React.useState(null);
+  const [data, setData] = React.useState(null);
+
+  React.useEffect(() => {
+    async function getVideos() {
+      try {
+        const req_url = `${baseURL}/api/videos`;
+        const response = await axios.get(req_url);
+        setData(response.data.videos);
+        console.log(response.data.videos);
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+
+    getVideos();
+  }, []);
+
+  function toggleDisplay(id) {
+    const x = document.getElementById(id);
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  };
+
+  async function downloadVideo(video, setUrl) {
+    try {
+      const url = `${baseURL}/api/download?video=${video.filename}`;
+      alert('Downloading video...');
+      const response = await axios.get(url);
+      setUrl(response.data.url);
+      console.log(response.data);
+    }
+    catch(error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -140,11 +163,14 @@ const Videos = () => {
                     <ListItem button divider>
                       <ListItemText className={classes.item}><span style={{ fontFamily: 'Segoe UI' }}>Today</span></ListItemText>
                     </ListItem>
-                    {data.map((video, key) => (
-                      <ListItem button divider>
-                        <ListItemText className={classes.item}>{video}</ListItemText>
-                      </ListItem>
-                    ))}
+                    {data
+                      ? data.map((video, key) => (
+                        <ListItem button divider key={key} onClick={() => downloadVideo(video, setUrl)}>
+                          <ListItemText className={classes.item}>Video {key + 1}</ListItemText>
+                        </ListItem>
+                      ))
+                      : null
+                    }
                   </List>
                 </Paper>
               </div>
@@ -157,6 +183,8 @@ const Videos = () => {
                     url={url}
                     width='100%'
                     height='100%'
+                    playing
+                    controls
                   />
                 </div>
               </div>
@@ -175,25 +203,28 @@ const Videos = () => {
                 <ListItem button divider>
                   <ListItemText className={classes.item}><div style={{ fontFamily: 'Segoe UI', textAlign: "center" }}>Today</div></ListItemText>
                 </ListItem>
-                {data.map((video, key) => (
-                  <ListItem
-                    key={key}
-                    button
-                    divider
-                    onClick={() => toggleDisplay(video)}
-                    style={{ display: "flex", flexDirection: "column", justifyContent: "left" }}
-                  >
-                    <ListItemText className={classes.item}>{video}</ListItemText>
-                    <div className={classes.video} id={video}>
-                      <ReactPlayer
-                        style={{ borderRadius: "10px", overflow: "hidden" }}
-                        url={url}
-                        width='100%'
-                        height='100%'
-                      />
-                    </div>
-                  </ListItem>
-                ))}
+                {data
+                  ? data.map((video, key) => (
+                    <ListItem
+                      key={key}
+                      button
+                      divider
+                      onClick={() => toggleDisplay(`video${key + 1}`)}
+                      style={{ display: "flex", flexDirection: "column", justifyContent: "left" }}
+                    >
+                      <ListItemText className={classes.item}>Video {key + 1}</ListItemText>
+                      <div className={classes.video} id={`video${key + 1}`}>
+                        <ReactPlayer
+                          style={{ borderRadius: "10px", overflow: "hidden" }}
+                          url={url}
+                          width='100%'
+                          height='100%'
+                        />
+                      </div>
+                    </ListItem>
+                  ))
+                  : null
+                }
               </List>
             </Paper>
           </div>
