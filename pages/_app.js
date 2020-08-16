@@ -6,7 +6,7 @@ import getBaseURL from '../utils/baseURL';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
-  const [baseURL, setBaseURL] = React.useState(null);
+  const [baseURL, setBaseURL] = React.useState('http://localhost:3000');
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -15,7 +15,6 @@ export default function MyApp(props) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
     setBaseURL(getBaseURL(window));
-
   }, []);
 
   return (
