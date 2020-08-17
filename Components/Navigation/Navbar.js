@@ -152,16 +152,19 @@ export default function Navbar() {
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
-          <Paper className={classes.PaperDesk}>
+          <Paper
+            onClick={() => Router.push("/log")}
+            className={classes.PaperDesk}
+          >
             <img
               className={classes.Img}
               src="/wifi_vectorized.png"
               alt="WiFi Logo"
             />
-            WIFI
+            LOG
           </Paper>
           <Paper
-            onClick={() => Router.push("/wifi")}
+            onClick={() => Router.push("/log")}
             className={classes.PaperMob}
           >
             <img
@@ -169,7 +172,7 @@ export default function Navbar() {
               src="/wifi_vectorized.png"
               alt="WiFi Logo"
             />
-            WIFI
+            LOG
           </Paper>
         </Grid>
       </Grid>
