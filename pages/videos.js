@@ -134,19 +134,6 @@ const Videos = ({ baseURL }) => {
     }
   };
 
-  async function downloadVideo(video, setUrl) {
-    try {
-      const url = `${baseURL}/api/download?video=${video.filename}`;
-      alert('Downloading video...');
-      const response = await axios.get(url);
-      setUrl(response.data.url);
-      console.log(response.data);
-    }
-    catch(error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       <div className={classes.desktop}>
