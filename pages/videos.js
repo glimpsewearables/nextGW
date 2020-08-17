@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
     textAlign: "left",
     width: "100%",
-    height: "87%",
+    height: "642px",
     fontFamily: "Segoe UI",
     fontSize: "20px",
     color: "#7e7e7e",
@@ -153,7 +153,7 @@ const Videos = ({ baseURL }) => {
                     {data
                       ? data.map((video, key) => (
                         <ListItem button divider key={key} onClick={() => setUrl(video.url)}>
-                          <ListItemText className={classes.item}>Video {key + 1}</ListItemText>
+                          <ListItemText className={classes.item}>{video.time}</ListItemText>
                         </ListItem>
                       ))
                       : null
@@ -198,7 +198,7 @@ const Videos = ({ baseURL }) => {
                       onClick={() => toggleDisplay(`video${key + 1}`)}
                       style={{ display: "flex", flexDirection: "column", justifyContent: "left" }}
                     >
-                      <ListItemText className={classes.item}>Video {key + 1}</ListItemText>
+                      <ListItemText className={classes.item}>{video.time}</ListItemText>
                       <div className={classes.video} id={`video${key + 1}`}>
                         <ReactPlayer
                           style={{ borderRadius: "10px", overflow: "hidden" }}
