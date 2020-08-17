@@ -112,7 +112,7 @@ const Videos = ({ baseURL }) => {
   React.useEffect(() => {
     async function getVideos() {
       try {
-        const req_url = `${baseURL}/api/videos`;
+        const req_url = `${baseURL}/api/videos?baseURL=${baseURL}`;
         const response = await axios.get(req_url);
         setData(response.data.videos);
         console.log(response.data.videos);
@@ -165,7 +165,7 @@ const Videos = ({ baseURL }) => {
                     </ListItem>
                     {data
                       ? data.map((video, key) => (
-                        <ListItem button divider key={key} onClick={() => downloadVideo(video, setUrl)}>
+                        <ListItem button divider key={key} onClick={() => setUrl(video.url)}>
                           <ListItemText className={classes.item}>Video {key + 1}</ListItemText>
                         </ListItem>
                       ))
@@ -183,7 +183,6 @@ const Videos = ({ baseURL }) => {
                     url={url}
                     width='100%'
                     height='100%'
-                    playing
                     controls
                   />
                 </div>
@@ -216,7 +215,7 @@ const Videos = ({ baseURL }) => {
                       <div className={classes.video} id={`video${key + 1}`}>
                         <ReactPlayer
                           style={{ borderRadius: "10px", overflow: "hidden" }}
-                          url={url}
+                          url={video.url}
                           width='100%'
                           height='100%'
                         />

@@ -3,7 +3,8 @@ import axios from 'axios';
 export default async (req, res) => {
 	console.log("here");
 	try {
-		const tunnel_path = 'https://707f180ffe8c.ngrok.io//home/pi/pikrellcam/media/videos';
+		const { baseURL } = req.query;
+		const tunnel_path = `${baseURL}5/home/pi/pikrellcam/media/videos`;
 		const response = await axios.get(tunnel_path);
 		const videos = response.data.files.map(video => {
 			const info = video.title.split('_');
