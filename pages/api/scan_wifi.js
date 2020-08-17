@@ -7,7 +7,7 @@ export default async (req, res) => {
 		scriptPath: process.env.scriptDir,
 	};
 
-	PythonShell.run('scan_wifi.py', options, function (error, results) {
+	PythonShell.run('/home/pi/nextGW/Autohotspot/scan_wifi.py', options, function (error, results) {
 		if (error) {
 			console.log(error);
 			res.status(500).json({ error: 'Internal Server Error' });
