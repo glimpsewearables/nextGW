@@ -7,8 +7,13 @@ import Navbar from "../Components/Navigation/Navbar";
 import ListItemText from '@material-ui/core/ListItemText';
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from '@material-ui/core/Button';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
+import _ from 'underscore';
+import moment from 'moment';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -91,6 +96,16 @@ const useStyles = makeStyles((theme) => ({
       height: "100%"
     },
   },
+  dateButton: {
+    color: "#7e7e7e",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "16px"
+    }
+  },
+  item: {
+    textAlign: "center"
+  },
   desktop: {
     [theme.breakpoints.down("sm")]: {
       display: "none"
@@ -108,14 +123,32 @@ const Videos = ({ baseURL }) => {
   const classes = useStyles();
   const [url, setUrl] = React.useState(null);
   const [data, setData] = React.useState(null);
+  const [dates, setDates] = React.useState(null);
+  const [currDate, setCurrDate] = React.useState(null);
+  const [currVideos, setCurrVideos] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (event) => {
+    if (moment(event.target.id, "YYYY-MM-DD", true).isValid()) {
+      setCurrDate(event.target.id);
+      setCurrVideos(data[event.target.id]);
+    }
+    setAnchorEl(null);
+  };
 
   React.useEffect(() => {
     async function getVideos() {
       try {
         const req_url = `${baseURL}/api/videos?baseURL=${baseURL}`;
         const response = await axios.get(req_url);
+        setDates(response.data.date_list);
         setData(response.data.videos);
-        console.log(response.data.videos);
+        setCurrDate(response.data.date_list[0]);
+        setCurrVideos(response.data.videos[response.data.date_list[0]]);
       }
       catch (error) {
         console.log(error);
@@ -147,16 +180,34 @@ const Videos = ({ baseURL }) => {
               <div className={classes.column}>
                 <Paper className={classes.paper}>
                   <List component="nav" className={classes.root}>
-                    <ListItem button divider>
-                      <ListItemText className={classes.item}><span style={{ fontFamily: 'Segoe UI' }}>Today</span></ListItemText>
+
+                    <ListItem divider>
+                      <Button className={classes.dateButton} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        {currDate ? currDate : null}
+                      </Button>
+                      <Menu
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        {dates
+                          ? dates.map((date, key) => {
+                            return <MenuItem key={key} onClick={handleClose} id={date}>{date}</MenuItem>
+                          })
+                          : null
+                        }
+                      </Menu>
                     </ListItem>
-                    {data
-                      ? data.map((video, key) => (
-                        <ListItem button divider key={key} onClick={() => setUrl(video.url)}>
-                          <ListItemText className={classes.item}>{video.time}</ListItemText>
-                        </ListItem>
-                      ))
-                      : null
+
+                    {
+                      currVideos
+                        ? currVideos.map((video, key) => (
+                          <ListItem button divider key={key} onClick={() => setUrl(video.url)}>
+                            <ListItemText className={classes.item}>{video.time}</ListItemText>
+                          </ListItem>
+                        ))
+                        : null
                     }
                   </List>
                 </Paper>
@@ -179,18 +230,34 @@ const Videos = ({ baseURL }) => {
         </Container>
       </div>
 
-
       <div className={classes.mobile}>
         <Grid className={classes.main} item xs={12} sm={12}>
           <h1 style={{ color: '#7e7e7e', fontFamily: 'Segoe UI', marginTop: "20px", marginBottom: '20px' }}>Videos</h1>
           <div className={classes.column}>
             <Paper className={classes.paper}>
               <List component="nav" className={classes.root}>
-                <ListItem button divider>
-                  <ListItemText className={classes.item}><div style={{ fontFamily: 'Segoe UI', textAlign: "center" }}>Today</div></ListItemText>
+                
+                <ListItem divider>
+                  <Button className={classes.dateButton} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                    {currDate ? currDate : null}
+                  </Button>
+                  <Menu
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                  >
+                    {dates
+                      ? dates.map((date, key) => {
+                        return <MenuItem key={key} onClick={handleClose} id={date}>{date}</MenuItem>
+                      })
+                      : null
+                    }
+                  </Menu>
                 </ListItem>
-                {data
-                  ? data.map((video, key) => (
+
+                {currVideos
+                  ? currVideos.map((video, key) => (
                     <ListItem
                       key={key}
                       button

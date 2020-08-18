@@ -1,4 +1,6 @@
 import axios from 'axios';
+import _, { filter } from 'underscore';
+import moment from 'moment';
 
 export default async (req, res) => {
 	try {
@@ -12,17 +14,29 @@ export default async (req, res) => {
 			const date = info[2];
 			const time = info[3] ? info[3].substring(0, info[3].length - 4) : null;
 			const url = `${tunnel_path}/${video.title}`;
-			return {
-				filename,
-				name,
-				date,
-				time,
-				url
-			};
+			return moment(date, "YYYY-MM-DD", true).isValid()
+				? {
+					filename,
+					name,
+					date,
+					time,
+					url
+				}
+				: null;
 		})
-		videos.shift();
-		console.log(videos);
-		res.status(200).json({ videos: videos })
+		const filtered = videos.filter(el => el != null);
+		const grouped = _.groupBy(filtered, video => video.date);
+
+		const date_list = Object.entries(grouped).map(([key]) => key);
+		//date_list.push('2020-08-17');
+		//Sort in descending order
+		const sorted_dates = date_list.sort(function (a, b) {
+			a = a.split('-').reverse().join('');
+			b = b.split('-').reverse().join('');
+			return b.localeCompare(a);
+		});
+		console.log(sorted_dates);
+		res.status(200).json({ videos: grouped, date_list: sorted_dates });
 	}
 	catch (error) {
 		console.log(error);
