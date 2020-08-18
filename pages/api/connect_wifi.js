@@ -11,7 +11,7 @@ export default async (req, res) => {
 		args: [name, password]
 	};
 
-	PythonShell.run('/home/pi/nextGW/Autohotspot/update_wifi.py', options, function (error, results) {
+	PythonShell.run('update_wifi.py', options, function (error, results) {
 		if (error) {
 			console.log(error);
 			res.status(500).json({ error: 'Internal Server Error' });

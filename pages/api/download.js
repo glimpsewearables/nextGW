@@ -1,7 +1,7 @@
 import { DownloaderHelper } from 'node-downloader-helper';
 export default async (req, res) => {
 	try {
-		const tunnel_path = 'https://707f180ffe8c.ngrok.io//home/pi/pikrellcam/media/videos';
+		const tunnel_path = "http://"+process.env.NEXT_PUBLIC_RPI_IP+"30005/home/pi/pikrellcam/media/videos";
 		const video = `${tunnel_path}/${req.query.video}`;
 		console.log(req.query.video);
 		const dl = new DownloaderHelper(video, 'F:\\Fiverr\\nextGW\\public\\videos');

@@ -4,7 +4,7 @@ export default async (req, res) => {
 	console.log("here");
 	try {
 		const { baseURL } = req.query;
-		const tunnel_path = `${baseURL}5/home/pi/pikrellcam/media/videos`;
+		const tunnel_path = "http://"+process.env.NEXT_PUBLIC_RPI_IP+":30005/home/pi/pikrellcam/media/videos";
 		const response = await axios.get(tunnel_path);
 		const videos = response.data.files.map(video => {
 			const info = video.title.split('_');

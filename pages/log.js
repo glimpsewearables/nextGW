@@ -1,8 +1,14 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Navbar from "../Components/Navigation/Navbar";
 import Container from "@material-ui/core/Container";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
+import { Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -14,12 +20,13 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
-    width: "70%",
+    width: "78%",
     fontFamily: "Segoe UI",
     fontSize: "20px",
+    marginTop: '20px',
     color: "#7e7e7e",
-    backgroundColor: "#dae3f0",
-    borderRadius: "8px",
+    backgroundColor: "#fff",
+    borderRadius: "10px",
     //boxShadow: "5px 6px 13px  grey",
     cursor: "pointer",
     display: "flex",
@@ -27,15 +34,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     [theme.breakpoints.down("xs")]: {
       padding: theme.spacing(4),
-      fontSize: "24px",
-      width: "69%",
-      height: "20px",
     },
   },
   main: {
     padding: "0rem",
     [theme.breakpoints.down("xs")]: {
-      padding: "1rem",
+      padding: "2rem",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -74,55 +78,72 @@ const useStyles = makeStyles((theme) => ({
       width: "20rem",
     },
   },
-  video: {
-    width: "100%",
-    height: "86.5%",
-    padding: theme.spacing(2),
-    backgroundColor: "#dae3f0",
-    borderRadius: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: "17px",
-    [theme.breakpoints.down("xs")]: {
-      height: '250px',
-    },
-  },
   header: {
     [theme.breakpoints.down("xs")]: {
       display: "none"
     },
   },
   heading: {
-    color: '#7e7e7e', 
-    fontWeight: 'bold', 
-    fontFamily: 'Segoe UI', 
-    margin: '0', 
-    width: '100%', 
+    color: '#7e7e7e',
+    fontWeight: 'bold',
+    fontFamily: 'Segoe UI',
+    margin: '0',
+    width: '100%',
     textAlign: 'left',
+    [theme.breakpoints.down("xs")]: {
+      backgroundColor: "#dae3f0",
+      borderRadius: "10px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "60px",
+      marginBottom: "-30px",
+      zIndex: "5"
+    },
   }
 }));
 
-export default function Livestream({ baseURL }) {
+export default function Log({ baseURL }) {
   const classes = useStyles();
-  const [time, setTime] = React.useState(Date.now());
+  const [log, setLog] = React.useState(null);
 
   React.useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 500);
-    return () => { clearInterval(interval); }
+    async function getLog() {
+      try {
+        const url = `${baseURL}/api/log?baseURL=${baseURL}`;
+        const response = await axios.get(url);
+        setLog(response.data.log);
+        console.log(log);
+      }
+      catch (error) {
+        console.log(error);
+      }
+    }
+
+    getLog();
   }, []);
 
   return (
     <Container>
       <Grid className={classes.grid} container spacing={5}>
         <Grid item xs={12} sm={3} md={2} className={classes.header}>
-            <Navbar />
+          <Navbar />
         </Grid>
         <Grid className={classes.main} item xs={12} sm={9} md={10}>
-          <h1 className={classes.heading}>Live</h1>
-          <div className={classes.video}>
-            <img src={"http://"+process.env.NEXT_PUBLIC_RPI_IP+`:30005/run/pikrellcam/mjpeg.jpg?${time}`} style={{ width: "100%", height: "100%" }} />
-          </div>
+          <h1 className={classes.heading}>Log</h1>
+          <Paper className={classes.paper}>
+            <List className={classes.root}>
+              {
+                log
+                  ? log.map((line, key) => (
+                    <ListItem button divider key={key}>
+                      <ListItemText className={classes.item}>{line.join(' - ')}</ListItemText>
+                    </ListItem>
+                  ))
+                  : null
+              }
+            </List>
+          </Paper>
         </Grid>
       </Grid>
     </Container >
