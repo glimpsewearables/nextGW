@@ -134,8 +134,8 @@ export default function Navbar() {
           >
             <img
               className={classes.Img}
-              src="/wifi_vectorized.png"
-              alt="WiFi Logo"
+              src="/live.png"
+              alt="Live"
             />
             LIVE
           </Paper>
@@ -145,8 +145,8 @@ export default function Navbar() {
           >
             <img
               className={classes.Img}
-              src="/wifi_vectorized.png"
-              alt="WiFi Logo"
+              src="/live.png"
+              alt="Live"
             />
             LIVE
           </Paper>
@@ -158,8 +158,8 @@ export default function Navbar() {
           >
             <img
               className={classes.Img}
-              src="/wifi_vectorized.png"
-              alt="WiFi Logo"
+              src="/log.webp"
+              alt="Log"
             />
             LOG
           </Paper>
@@ -169,8 +169,8 @@ export default function Navbar() {
           >
             <img
               className={classes.Img}
-              src="/wifi_vectorized.png"
-              alt="WiFi Logo"
+              src="/log.webp"
+              alt="Log"
             />
             LOG
           </Paper>
