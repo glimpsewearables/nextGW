@@ -6,7 +6,7 @@ import getBaseURL from '../utils/baseURL';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
-  const [baseURL, setBaseURL] = React.useState('http://localhost:3000');
+  const [baseURL, setBaseURL] = React.useState(null);
 
   React.useEffect(() => {
     // Remove the server-side injected CSS.
@@ -23,7 +23,7 @@ export default function MyApp(props) {
         <title>WiFi App</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <Component {...pageProps} baseURL={baseURL} />
+      {baseURL ? <Component {...pageProps} baseURL={baseURL} /> : null}
     </React.Fragment>
   );
 }
