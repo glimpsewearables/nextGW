@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   PaperDesk: {
     padding: theme.spacing(2),
+    height: "7rem",
+    width: "5rem",
     textAlign: "center",
     fontFamily: "Segoe UI ",
     fontSize: "20px",
@@ -134,8 +136,9 @@ export default function Navbar() {
           >
             <img
               className={classes.Img}
-              src="/live.png"
+              src="/live.webp"
               alt="Live"
+              style={{height: '4rem', width: '7rem'}}
             />
             LIVE
           </Paper>
@@ -145,8 +148,9 @@ export default function Navbar() {
           >
             <img
               className={classes.Img}
-              src="/live.png"
+              src="/live.webp"
               alt="Live"
+              style={{height: '4rem'}}
             />
             LIVE
           </Paper>
