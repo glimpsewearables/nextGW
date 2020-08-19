@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   PaperMob: {
+    height: "7rem",
+    width: "5rem",
     display: "none",
     padding: theme.spacing(2),
     textAlign: "center",
@@ -150,7 +152,7 @@ export default function Navbar() {
               className={classes.Img}
               src="/live.webp"
               alt="Live"
-              style={{height: '4rem'}}
+              style={{height: '4rem', width: '7rem'}}
             />
             LIVE
           </Paper>
