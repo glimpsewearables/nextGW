@@ -121,7 +121,7 @@ export default function Livestream({ baseURL }) {
         <Grid className={classes.main} item xs={12} sm={9} md={10}>
           <h1 className={classes.heading}>Live</h1>
           <div className={classes.video}>
-            <img src={"http://"+process.env.NEXT_PUBLIC_RPI_IP+`:30005/run/pikrellcam/mjpeg.jpg?${time}`} style={{ width: "100%", height: "100%" }} />
+            <img src={`${baseURL}5/run/pikrellcam/mjpeg.jpg?${time}`} style={{ width: "100%", height: "100%" }} />
           </div>
         </Grid>
       </Grid>
