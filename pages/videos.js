@@ -236,7 +236,7 @@ const Videos = ({ baseURL }) => {
           <div className={classes.column}>
             <Paper className={classes.paper}>
               <List component="nav" className={classes.root}>
-                
+
                 <ListItem divider>
                   <Button className={classes.dateButton} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                     {currDate ? currDate : null}
@@ -269,9 +269,10 @@ const Videos = ({ baseURL }) => {
                       <div className={classes.video} id={`video${key + 1}`}>
                         <ReactPlayer
                           style={{ borderRadius: "10px", overflow: "hidden" }}
-                          url={video.url}
+                          url={url}
                           width='100%'
                           height='100%'
+                          controls
                         />
                       </div>
                     </ListItem>
