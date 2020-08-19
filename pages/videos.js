@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     [theme.breakpoints.down("xs")]: {
       fontSize: "24px",
+      height: "80%",
     },
   },
   main: {
@@ -269,7 +270,7 @@ const Videos = ({ baseURL }) => {
                       <div className={classes.video} id={`video${key + 1}`}>
                         <ReactPlayer
                           style={{ borderRadius: "10px", overflow: "hidden" }}
-                          url={url}
+                          url={video.url}
                           width='100%'
                           height='100%'
                           controls
