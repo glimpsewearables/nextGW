@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
     flexDirection: "column",
     [theme.breakpoints.down("xs")]: {
       padding: theme.spacing(4),
@@ -116,6 +116,7 @@ export default function Navbar() {
               className={classes.Img}
               src="/video.png"
               alt="Video Logo"
+              style={{height: '4rem', width: '4rem', marginTop: '10px'}}
             />
             VIDEOS
           </Paper>
@@ -127,6 +128,7 @@ export default function Navbar() {
               className={classes.Img}
               src="/video.png"
               alt="Video Logo"
+              style={{height: '4rem', width: '4rem', marginTop: '10px'}}
             />
             VIDEOS
           </Paper>
@@ -140,7 +142,7 @@ export default function Navbar() {
               className={classes.Img}
               src="/live.webp"
               alt="Live"
-              style={{height: '4rem', width: '7rem'}}
+              style={{height: '3rem', width: '7rem', marginTop: '18px'}}
             />
             LIVE
           </Paper>
@@ -152,7 +154,7 @@ export default function Navbar() {
               className={classes.Img}
               src="/live.webp"
               alt="Live"
-              style={{height: '4rem', width: '7rem'}}
+              style={{height: '3rem', width: '7rem', marginTop: '18px'}}
             />
             LIVE
           </Paper>
