@@ -7,9 +7,11 @@ import Paper from "@material-ui/core/Paper";
 import WiFiDesktop from "../WiFiDesktop/WiFiDesktop";
 
 const useStyles = makeStyles((theme) => ({
+
+  
   grid: {
-    backgroundColor: '#fafafa',
-    padding: "34px 0",
+    backgroundColor: '#121212',
+    paddingBottom: '50vh',
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column-reverse",
     },
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#7e7e7e",
     backgroundColor: "#fafafa",
     borderRadius: "8px",
-    boxShadow: "12px 12px 16px 0 rgba(0, 0, 0, 0.25), -8px -8px 12px 0 rgba(255, 255, 255, 0.3)",
+    boxShadow: "inset 7px 7px 24px #282e31, inset -7px -7px 24px #424c51",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -52,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     width: "70%",
-    fontFamily: "Roboto ",
+    fontFamily: "Roboto-Medium",
     fontSize: "20px",
-    color: "#7e7e7e",
-    backgroundColor: "#fafafa",
+    color: "#056082",
+    backgroundColor: "#353d41",
     borderRadius: "30px",
-    boxShadow: "inset 8px 8px 16px 0 #d0d0d0, inset -8px -8px 16px 0 #ffffff;",
+    boxShadow: "inset 7px 7px 24px #282e31, inset -7px -7px 24px #424c51",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -70,10 +72,11 @@ const useStyles = makeStyles((theme) => ({
   },
   typo: {
     display: "none",
-    color: "#7e7e7e",
+    color: "#056082",
     fontWeight: "bold",
     fontFamily: "Roboto",
-    marginLeft: "9%",
+    alignItems: "center",
+    justifyContent: "center",
     [theme.breakpoints.down("xs")]: {
       display: "block",
     },

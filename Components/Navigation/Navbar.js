@@ -41,22 +41,23 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   PaperMob: {
-    height: "12rem",
-    width: "8rem",
+    height: "10rem",
+    width: "10rem",
     display: "none",
-    padding: theme.spacing(2),
+    padding: '0px',
     textAlign: "center",
-    fontFamily: "Roboto ",
+    fontFamily: "Roboto-Bold",
     fontSize: "20px",
-    color: "#7e7e7e",
-    border: "10px solid white",
-    backgroundColor: "f1f1f1",
+    color: "#056082",
+
+    backgroundColor: "#FFFFFF",
+    opacity: '0.16',
     borderRadius: "40px",
-    boxShadow: "-7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;",
+    boxShadow: "",
     cursor: "pointer",
     flexDirection: "column",
     [theme.breakpoints.down("xs")]: {
-      padding: theme.spacing(4),
+      padding: theme.spacing(0),
       fontSize: "20px",
       display: "flex",
       alignItems: "center",
@@ -80,7 +81,7 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      <Grid className={classes.grid} container spacing={3}>
+      <Grid className={classes.grid} container spacing={5}>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
           <Paper
             onClick={() => Router.push("/")}
@@ -91,7 +92,7 @@ export default function Navbar() {
               src="/wifi_vectorized.png"
               alt="WiFi Logo"
             />
-            WIFI
+           
           </Paper>
           <Paper
             onClick={() => Router.push("/wifi")}
@@ -102,7 +103,7 @@ export default function Navbar() {
               src="/wifi_vectorized.png"
               alt="WiFi Logo"
             />
-            WIFI
+         
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
@@ -116,11 +117,12 @@ export default function Navbar() {
               alt="Video Logo"
               style={{height: '4rem', width: '4rem', marginTop: '10px'}}
             />
-            VIDEOS
+        
           </Paper>
           <Paper
             className={classes.PaperMob}
             onClick={() => Router.push("/videos")}
+           
           >
             <img
               className={classes.Img}
@@ -128,7 +130,7 @@ export default function Navbar() {
               alt="Video Logo"
               style={{height: '4rem', width: '4rem', marginTop: '10px'}}
             />
-            VIDEOS
+        
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
@@ -142,7 +144,7 @@ export default function Navbar() {
               alt="Live"
               style={{height: '3rem', width: '7rem', marginTop: '18px'}}
             />
-            LIVE
+           
           </Paper>
           <Paper
             onClick={() => Router.push("/livestream")}
@@ -154,7 +156,7 @@ export default function Navbar() {
               alt="Live"
               style={{height: '3rem', width: '7rem', marginTop: '18px'}}
             />
-            LIVE
+          
           </Paper>
         </Grid>
         <Grid className={classes.Centerbox} item xs={6} sm={12}>
@@ -167,7 +169,7 @@ export default function Navbar() {
               src="/log.webp"
               alt="Log"
             />
-            LOG
+           
           </Paper>
           <Paper
             onClick={() => Router.push("/log")}
@@ -178,7 +180,7 @@ export default function Navbar() {
               src="/log.webp"
               alt="Log"
             />
-            LOG
+          
           </Paper>
         </Grid>
       </Grid>

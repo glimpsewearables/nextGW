@@ -13,14 +13,14 @@
    src: url("/fonts/Roboto-Regular.ttf");
  }
  @font-face {
-   font-family: "Roboto";
+   font-family: "Roboto-Medium";
    font-style: normal;
    font-display: swap;
    font-weight: 500;
    src: url("/fonts/Roboto-Medium.ttf");
  }
  @font-face {
-   font-family: "Roboto";
+   font-family: "Roboto-Bold";
    font-style: normal;
    font-display: swap;
    font-weight: 700;

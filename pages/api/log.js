@@ -11,7 +11,7 @@ export default async (req, res) => {
 		else{
 		  url = baseURL;
 		}
-		const tunnel_path = `${url}:4005/glimpse-cam/glimpseLog.log`;
+		const tunnel_path = `https://a5554ee460c1209e42734a6245543849.balena-devices.com/run/pikrellcam/home/pi/glimpse-cam/glimpseLog.log`;
 		const response = await axios.get(tunnel_path);
 		const log = response.data.split('\n').reverse();
 		const log_v1 = log.map(string => {
